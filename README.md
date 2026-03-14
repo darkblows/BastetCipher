@@ -1,4 +1,4 @@
-<img src="https://i.ibb.co/rG4f2wFs/Screen.png">
+<img src="https://i.ibb.co/rG4f2wFs/Screen.png" width="100%">
 
 <div align="center">
 
