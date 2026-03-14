@@ -708,7 +708,7 @@ A: Yes. The pipeline is fully documented above. You can reproduce the same outpu
 ```
 MIT License
 
-Copyright (c) 2025 BastetCipher
+Copyright (c) 2026 - zdarkblow
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
