@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- ═══ CONTENT SECURITY POLICY — blocks inline injection, remote scripts, etc. ═══
+     script-src 'self' 'unsafe-inline': required because all JS is inline in this
+     single-file app (no external scripts are loaded or allowed).
+     style-src 'self' 'unsafe-inline': same — all CSS is inline.
+     img-src 'self' data:: allows only the embedded data-URI favicon.
+     Everything else (connect, object, frame, worker…) is blocked by default-src 'none'.
+-->
+<meta http-equiv="Content-Security-Policy"
+  content="
+    default-src 'none';
+    script-src  'self' 'unsafe-inline';
+    style-src   'self' 'unsafe-inline';
+    img-src     'self' data:;
+    font-src    'self' data:;
+    connect-src 'none';
+    object-src  'none';
+    frame-src   'none';
+    worker-src  'none';
+    base-uri    'none';
+    form-action 'none';
+  ">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>вαѕтєт¢уρнєя 𓃭</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='bg' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%232a1e0a'/%3E%3Cstop offset='100%25' stop-color='%230f0c06'/%3E%3C/radialGradient%3E%3CradialGradient id='gold' cx='50%25' cy='35%25' r='60%25'%3E%3Cstop offset='0%25' stop-color='%23f0c040'/%3E%3Cstop offset='60%25' stop-color='%23c9a84c'/%3E%3Cstop offset='100%25' stop-color='%237a5c1e'/%3E%3C/radialGradient%3E%3CradialGradient id='eye' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%2300ff88'/%3E%3Cstop offset='100%25' stop-color='%23006633'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23bg)'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23c9a84c' stroke-width='1.2' opacity='0.7'/%3E%3Cpolygon points='32,6 60,56 4,56' fill='none' stroke='%23c9a84c' stroke-width='1' opacity='0.35'/%3E%3Crect x='12' y='54' width='40' height='7' rx='2' fill='url(%23gold)'/%3E%3Cpath d='M20 54 L20 36 Q20 27 32 25 Q44 27 44 36 L44 54 Z' fill='url(%23gold)'/%3E%3Cellipse cx='32' cy='24' rx='14' ry='12' fill='url(%23gold)'/%3E%3Cpolygon points='20,16 15,4 26,13' fill='url(%23gold)'/%3E%3Cpolygon points='44,16 49,4 38,13' fill='url(%23gold)'/%3E%3Cellipse cx='26' cy='22' rx='4' ry='3' fill='url(%23eye)'/%3E%3Cellipse cx='38' cy='22' rx='4' ry='3' fill='url(%23eye)'/%3E%3Cellipse cx='26' cy='22' rx='2' ry='2.5' fill='%23000'/%3E%3Cellipse cx='38' cy='22' rx='2' ry='2.5' fill='%23000'/%3E%3Ccircle cx='27' cy='21' r='1' fill='%23fff' opacity='0.9'/%3E%3Ccircle cx='39' cy='21' r='1' fill='%23fff' opacity='0.9'/%3E%3Cpath d='M22 22 L26 21 L30 22' fill='none' stroke='%231a1208' stroke-width='0.8'/%3E%3Cpath d='M34 22 L38 21 L42 22' fill='none' stroke='%231a1208' stroke-width='0.8'/%3E%3Cellipse cx='32' cy='58' rx='3' ry='2' fill='%23c9a84c' opacity='0.6'/%3E%3C/svg%3E">
+<style type="text/css">
+  /* ═══════════════════════════════════════════
+     FONTS & ROOT VARIABLES
+  ═══════════════════════════════════════════ */
+  @import url('data:text/css,');
+
+  :root {
+    --gold: #c9a84c;
+    --gold-bright: #f0c040;
+    --gold-dark: #7a5c1e;
+    --stone: #2a2318;
+    --stone-mid: #3d3220;
+    --stone-light: #5a4a2a;
+    --stone-pale: #8a7550;
+    --glow-amber: #ff8c00;
+    --glow-orange: #ff6a00;
+    --glow-blue: #4af;
+    --emerald: #00c896;
+    --sand: #d4b483;
+    --deep: #0f0c06;
+    --ink: #1a1408;
+    --rune-glow: rgba(201,168,76,0.85);
+    --shadow-deep: rgba(0,0,0,0.85);
+    --torch1: #ff9a00;
+    --torch2: #ff5500;
+    --torch3: #ffcc00;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--deep);
+    color: var(--sand);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    overflow-x: hidden;
+  }
+
+  /* ═══════════════════════════════════════════
+     BACKGROUND CHAMBER
+  ═══════════════════════════════════════════ */
+  #chamber {
+    position: fixed; inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, #3a2800 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 0%,   #2a1a00 0%, transparent 60%),
+      linear-gradient(180deg, #0a0800 0%, #1a1206 40%, #0f0c06 100%);
+  }
+
+  /* Stone wall texture overlay */
+  #chamber::before {
+    content:'';
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0,0,0,0.18) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(0,0,0,0.10) 60px);
+    pointer-events:none;
+  }
+
+  /* ═══════════════════════════════════════════
+     SAND PARTICLES CANVAS
+  ═══════════════════════════════════════════ */
+  #particles-canvas {
+    position:fixed; inset:0; z-index:1;
+    pointer-events:none;
+  }
+
+  /* ═══════════════════════════════════════════
+     WALL HIEROGLYPHS (BACKGROUND)
+  ═══════════════════════════════════════════ */
+  .wall-glyphs {
+    position:fixed; z-index:2;
+    opacity:0.18;
+    pointer-events:none;
+  }
+  .wall-glyphs.left  { left:0;  top:0; height:100vh; width:120px; }
+  .wall-glyphs.right { right:0; top:0; height:100vh; width:120px; transform:scaleX(-1); }
+
+  /* ═══════════════════════════════════════════
+     TORCH LIGHTS
+  ═══════════════════════════════════════════ */
+  .torch {
+    position:fixed; z-index:3;
+    width:60px; height:100px;
+    pointer-events:none;
+  }
+  .torch.tl { top:80px; left:60px; }
+  .torch.tr { top:80px; right:60px; }
+  .torch.bl { bottom:80px; left:60px; }
+  .torch.br { bottom:80px; right:60px; }
+
+  .torch-glow {
+    position:absolute;
+    border-radius:50%;
+    animation: torchFlicker 2.5s ease-in-out infinite;
+  }
+  .torch.tl .torch-glow { box-shadow:0 0 80px 40px rgba(255,140,0,0.22); width:80px; height:80px; top:-20px; left:-20px; }
+  .torch.tr .torch-glow { box-shadow:0 0 80px 40px rgba(255,140,0,0.22); width:80px; height:80px; top:-20px; left:-20px; }
+  .torch.bl .torch-glow { box-shadow:0 0 60px 30px rgba(255,100,0,0.15); width:60px; height:60px; top:-10px; left:0; }
+  .torch.br .torch-glow { box-shadow:0 0 60px 30px rgba(255,100,0,0.15); width:60px; height:60px; top:-10px; left:0; }
+
+  @keyframes torchFlicker {
+    0%,100% { opacity:1;   transform:scale(1); }
+    20%      { opacity:0.8; transform:scale(0.95); }
+    40%      { opacity:1;   transform:scale(1.05); }
+    60%      { opacity:0.85;transform:scale(0.98); }
+    80%      { opacity:1;   transform:scale(1.02); }
+  }
+
+  /* ═══════════════════════════════════════════
+     PYRAMID BACKGROUND GLYPH
+  ═══════════════════════════════════════════ */
+  #bg-pyramid {
+    position:fixed; bottom:0; left:50%;
+    transform:translateX(-50%);
+    z-index:2; opacity:0.07;
+    pointer-events:none;
+    width:600px; height:500px;
+    animation: pyramidPulse 6s ease-in-out infinite;
+  }
+
+  @keyframes pyramidPulse {
+    0%,100% { opacity:0.07; filter:drop-shadow(0 0 0px #c9a84c); }
+    50%     { opacity:0.13; filter:drop-shadow(0 0 30px #c9a84c); }
+  }
+
+  /* ═══════════════════════════════════════════
+     MAIN SCROLL / LAYOUT
+  ═══════════════════════════════════════════ */
+  #app {
+    position:relative; z-index:10;
+    min-height:100vh;
+    display:flex; flex-direction:column;
+    align-items:center;
+    padding:40px 20px 80px;
+  }
+
+  /* ═══════════════════════════════════════════
+     HEADER CROWN
+  ═══════════════════════════════════════════ */
+  #header {
+    text-align:center;
+    margin-bottom:32px;
+    position:relative;
+  }
+
+  #bastet-statue-wrap {
+    display:flex;
+    justify-content:center;
+    margin-bottom:12px;
+    position:relative;
+  }
+
+  #bastet-statue-wrap::after {
+    content:'';
+    position:absolute;
+    bottom:-8px; left:50%;
+    transform:translateX(-50%);
+    width:200px; height:20px;
+    background:radial-gradient(ellipse, rgba(201,168,76,0.4) 0%, transparent 70%);
+    animation: eyeGlow 3s ease-in-out infinite;
+  }
+
+  .app-title {
+    font-size:clamp(2.4rem, 6vw, 4rem);
+    font-weight:700;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    background: linear-gradient(135deg, #a07020 0%, #f0c040 35%, #c9a84c 55%, #f0d060 75%, #a07020 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    filter:drop-shadow(0 0 20px rgba(201,168,76,0.6));
+    animation: titleShimmer 4s ease-in-out infinite;
+    font-family:'Palatino Linotype','Palatino','Book Antiqua', serif;
+  }
+
+  @keyframes titleShimmer {
+    0%,100% { filter:drop-shadow(0 0 20px rgba(201,168,76,0.6)); }
+    50%     { filter:drop-shadow(0 0 40px rgba(240,192,64,0.9)); }
+  }
+
+  .app-tagline {
+    margin-top:10px;
+    font-size:clamp(0.85rem, 2vw, 1.05rem);
+    color:var(--stone-pale);
+    letter-spacing:0.15em;
+    font-style:italic;
+    animation: taglineFade 5s ease-in-out infinite;
+  }
+
+  @keyframes taglineFade {
+    0%,100% { opacity:0.75; }
+    50%     { opacity:1; color: var(--gold); }
+  }
+
+  .divider-runes {
+    margin:16px auto 0;
+    display:flex; align-items:center; gap:12px;
+    justify-content:center;
+  }
+  .divider-runes span { color:var(--gold); font-size:1.2rem; opacity:0.7; animation:runeFlicker 3s ease-in-out infinite; }
+  .divider-runes span:nth-child(2){ animation-delay:0.5s; }
+  .divider-runes span:nth-child(3){ animation-delay:1s; }
+  .divider-rune-line { flex:1; max-width:120px; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dark),transparent); }
+
+  @keyframes runeFlicker {
+    0%,100%{ opacity:0.7; text-shadow:none; }
+    50%{ opacity:1; text-shadow:0 0 12px var(--gold-bright); }
+  }
+
+  /* ═══════════════════════════════════════════
+     ALTAR PANEL (MAIN CARD)
+  ═══════════════════════════════════════════ */
+  #altar {
+    width:100%; max-width:780px;
+    background:
+      linear-gradient(160deg, #2e2414 0%, #1e180e 40%, #251e10 100%);
+    border:1px solid var(--gold-dark);
+    border-radius:4px;
+    box-shadow:
+      0 0 0 1px #1a1208,
+      0 0 0 3px var(--gold-dark),
+      0 0 60px rgba(201,168,76,0.12),
+      inset 0 1px 0 rgba(201,168,76,0.15),
+      inset 0 -1px 0 rgba(0,0,0,0.5);
+    position:relative;
+    overflow:visible;
+    padding:40px 40px 36px;
+    animation: altarGlow 8s ease-in-out infinite;
+  }
+
+  @keyframes altarGlow {
+    0%,100%{ box-shadow: 0 0 0 1px #1a1208, 0 0 0 3px var(--gold-dark), 0 0 60px rgba(201,168,76,0.12), inset 0 1px 0 rgba(201,168,76,0.15), inset 0 -1px 0 rgba(0,0,0,0.5); }
+    50%    { box-shadow: 0 0 0 1px #1a1208, 0 0 0 3px var(--gold),      0 0 100px rgba(201,168,76,0.25), inset 0 1px 0 rgba(201,168,76,0.25), inset 0 -1px 0 rgba(0,0,0,0.5); }
+  }
+
+  /* Altar corner ornaments */
+  #altar::before, #altar::after {
+    content:'𓂀';
+    position:absolute;
+    font-size:1.5rem;
+    color:var(--gold-dark);
+    animation:cornerGlow 4s ease-in-out infinite;
+  }
+  #altar::before { top:10px; left:14px; }
+  #altar::after  { top:10px; right:14px; }
+  @keyframes cornerGlow {
+    0%,100%{ color:var(--gold-dark); }
+    50%{ color:var(--gold-bright); text-shadow:0 0 10px var(--gold); }
+  }
+
+  /* Top/bottom engraved border bands */
+  .altar-band {
+    height:6px;
+    background:repeating-linear-gradient(90deg,
+      var(--gold-dark) 0, var(--gold-dark) 8px,
+      transparent 8px, transparent 16px,
+      var(--stone-light) 16px, var(--stone-light) 20px,
+      transparent 20px, transparent 28px
+    );
+    margin:-40px -40px 28px;
+    opacity:0.6;
+    animation:bandScroll 12s linear infinite;
+  }
+  .altar-band.bottom { margin:28px -40px -36px; }
+  @keyframes bandScroll {
+    from{ background-position:0 0; }
+    to  { background-position:100px 0; }
+  }
+
+  /* ═══════════════════════════════════════════
+     CIPHER WHEEL + BASTET EYES ROW
+  ═══════════════════════════════════════════ */
+  .altar-top-row {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:28px;
+    gap:16px;
+  }
+
+  #cipher-wheel-wrap {
+    flex-shrink:0;
+    animation: wheelSpin 20s linear infinite;
+    transform-origin:center;
+  }
+  #cipher-wheel-wrap.spinning {
+    animation: wheelSpinFast 1s linear infinite;
+  }
+  @keyframes wheelSpin     { from{transform:rotate(0deg);}   to{transform:rotate(360deg);}   }
+  @keyframes wheelSpinFast { from{transform:rotate(0deg);}   to{transform:rotate(360deg);}   }
+
+  #bastet-eyes-wrap {
+    flex:1;
+    display:flex; flex-direction:column;
+    align-items:center; gap:4px;
+  }
+
+  .bastet-section-title {
+    font-size:0.72rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--stone-pale);
+    margin-bottom:4px;
+  }
+
+  /* Bastet eye glow indicator */
+  .bastet-eyes-indicator {
+    display:flex; gap:20px; align-items:center;
+  }
+  .eye-orb {
+    width:22px; height:14px;
+    border-radius:50%;
+    background:radial-gradient(ellipse, #1a3a1a 60%, #0a200a 100%);
+    border:1px solid #2a5a2a;
+    position:relative;
+    transition: all 0.5s ease;
+  }
+  .eye-orb::after {
+    content:'';
+    position:absolute; inset:3px;
+    border-radius:50%;
+    background:radial-gradient(ellipse, #003300 0%, transparent 100%);
+    transition: all 0.5s;
+  }
+  .eye-orb.active {
+    background:radial-gradient(ellipse, #00ff88 0%, #00cc44 50%, #003322 100%);
+    border-color: var(--emerald);
+    box-shadow:0 0 16px var(--emerald), 0 0 32px rgba(0,200,150,0.5);
+    animation: eyePulse 1s ease-in-out infinite;
+  }
+  .eye-orb.active::after {
+    background:radial-gradient(ellipse, #ffffff 0%, #00ffcc 50%, transparent 100%);
+  }
+  @keyframes eyePulse {
+    0%,100%{ box-shadow:0 0 16px var(--emerald), 0 0 32px rgba(0,200,150,0.5); }
+    50%    { box-shadow:0 0 32px var(--emerald), 0 0 64px rgba(0,200,150,0.7); }
+  }
+
+  /* Lock icon */
+  .lock-status {
+    font-size:1.4rem;
+    transition: all 0.5s;
+    filter:grayscale(1) opacity(0.4);
+  }
+  .lock-status.unlocked {
+    filter:grayscale(0) drop-shadow(0 0 8px var(--gold-bright));
+    animation: lockBounce 0.5s ease;
+  }
+  @keyframes lockBounce {
+    0%  { transform:scale(1); }
+    40% { transform:scale(1.4) rotate(-10deg); }
+    70% { transform:scale(0.9) rotate(5deg); }
+    100%{ transform:scale(1); }
+  }
+
+  /* ═══════════════════════════════════════════
+     FORM ELEMENTS
+  ═══════════════════════════════════════════ */
+  .field-group {
+    margin-bottom:22px;
+  }
+
+  .field-label {
+    display:block;
+    font-size:0.78rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--stone-pale);
+    margin-bottom:8px;
+    font-family:'Palatino Linotype','Palatino', serif;
+  }
+
+  .field-label span {
+    color:var(--gold);
+    font-size:1rem;
+    margin-right:6px;
+  }
+
+  .stone-input {
+    width:100%;
+    background:linear-gradient(135deg, #16120a 0%, #1e1810 100%);
+    border:1px solid var(--gold-dark);
+    border-radius:2px;
+    color:var(--sand);
+    font-family:'Georgia', serif;
+    font-size:1rem;
+    padding:14px 16px;
+    outline:none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    caret-color:var(--gold);
+    box-shadow:inset 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .stone-input::placeholder { color:var(--stone-pale); opacity:0.6; font-style:italic; }
+  .stone-input:focus {
+    border-color:var(--gold);
+    box-shadow:0 0 0 2px rgba(201,168,76,0.2), inset 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .pim-note {
+    margin-top:8px;
+    font-size:0.75rem;
+    color:var(--stone-pale);
+    opacity:0.8;
+    line-height:1.6;
+    padding-left:4px;
+    border-left:2px solid var(--gold-dark);
+  }
+  .pim-note strong { color:var(--gold); }
+
+  /* ═══════════════════════════════════════════
+     GENERATE BUTTON
+  ═══════════════════════════════════════════ */
+  #btn-generate {
+    width:100%;
+    padding:18px 24px;
+    background:linear-gradient(135deg, #3d2e10 0%, #5a4420 50%, #3d2e10 100%);
+    border:1px solid var(--gold-dark);
+    border-radius:2px;
+    color:var(--gold-bright);
+    font-family:'Palatino Linotype','Palatino', serif;
+    font-size:1.1rem;
+    font-weight:700;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    transition:all 0.3s ease;
+    box-shadow:0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(201,168,76,0.2);
+  }
+  #btn-generate::before {
+    content:'';
+    position:absolute; top:0; left:-100%;
+    width:100%; height:100%;
+    background:linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent);
+    transition:left 0.5s ease;
+  }
+  #btn-generate:hover::before { left:100%; }
+  #btn-generate:hover {
+    border-color:var(--gold);
+    box-shadow:0 0 20px rgba(201,168,76,0.3), 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(201,168,76,0.3);
+    color:#fff;
+    background:linear-gradient(135deg, #4d3e20 0%, #7a6030 50%, #4d3e20 100%);
+  }
+  #btn-generate:active { transform:scale(0.99); }
+  #btn-generate:disabled { opacity:0.6; cursor:not-allowed; }
+
+  /* Shimmer stripe on button */
+  .btn-shimmer {
+    position:absolute; top:0; left:0; right:0;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(240,192,64,0.8), transparent);
+    animation:shimmerSlide 3s ease-in-out infinite;
+  }
+  @keyframes shimmerSlide {
+    from{ transform:translateX(-100%); }
+    to  { transform:translateX(200%); }
+  }
+
+  /* Rune decorations on button */
+  .btn-runes {
+    display:inline-flex; gap:12px;
+    margin-right:10px;
+    font-size:0.9rem;
+    opacity:0.6;
+  }
+
+  /* ═══════════════════════════════════════════
+     PROGRESS / STATUS BAR
+  ═══════════════════════════════════════════ */
+  #status-bar {
+    margin-top:16px;
+    height:20px;
+    background:rgba(0,0,0,0.4);
+    border:1px solid var(--gold-dark);
+    border-radius:2px;
+    overflow:hidden;
+    display:none;
+    position:relative;
+  }
+  #status-bar.active { display:block; }
+  #progress-fill {
+    height:100%;
+    background:linear-gradient(90deg, var(--gold-dark), var(--gold-bright), var(--gold-dark));
+    background-size:200% 100%;
+    animation:progressShimmer 1s linear infinite;
+    transition:width 0.3s ease;
+    width:0%;
+  }
+  @keyframes progressShimmer {
+    from{ background-position:100% 0; }
+    to  { background-position:-100% 0; }
+  }
+  #status-text {
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.7rem;
+    letter-spacing:0.15em;
+    color:var(--gold);
+    text-transform:uppercase;
+    mix-blend-mode:difference;
+  }
+
+  /* ═══════════════════════════════════════════
+     OUTPUT PANEL (STONE TABLET)
+  ═══════════════════════════════════════════ */
+  #output-section {
+    margin-top:28px;
+    display:none;
+    animation:fadeInUp 0.6s ease forwards;
+  }
+  #output-section.visible { display:block; }
+
+  @keyframes fadeInUp {
+    from{ opacity:0; transform:translateY(20px); }
+    to  { opacity:1; transform:translateY(0); }
+  }
+
+  .output-label {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:10px;
+  }
+
+  #output-panel {
+    background:linear-gradient(160deg, #0e0b06 0%, #16120a 100%);
+    border:1px solid var(--gold-dark);
+    border-radius:2px;
+    padding:20px;
+    max-height:220px;
+    overflow-y:auto;
+    font-family:'Courier New', 'Consolas', monospace;
+    font-size:0.78rem;
+    line-height:1.8;
+    letter-spacing:0.04em;
+    word-break:break-all;
+    color:#88cc88;
+    box-shadow:inset 0 2px 16px rgba(0,0,0,0.6);
+    position:relative;
+  }
+  #output-panel::-webkit-scrollbar { width:4px; }
+  #output-panel::-webkit-scrollbar-track { background:transparent; }
+  #output-panel::-webkit-scrollbar-thumb { background:var(--gold-dark); border-radius:2px; }
+
+  #output-text {
+    white-space:pre-wrap;
+    /* green cipher glow */
+    text-shadow:0 0 6px rgba(100,200,100,0.4);
+  }
+
+  /* Energy swirl overlay when generating */
+  #swirl-overlay {
+    position:absolute; inset:0;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 0.3s;
+    background:radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
+    animation:swirlPulse 0.5s ease-in-out infinite;
+  }
+  #swirl-overlay.active { opacity:1; }
+  @keyframes swirlPulse {
+    0%,100%{ transform:scale(1); opacity:0.5; }
+    50%    { transform:scale(1.02); opacity:1; }
+  }
+
+  /* Typing cursor effect during generation */
+  .cipher-cursor::after {
+    content:'█';
+    animation:blink 0.7s step-end infinite;
+    color:var(--gold-bright);
+  }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+  /* ═══════════════════════════════════════════
+     COPY BUTTON
+  ═══════════════════════════════════════════ */
+  #btn-copy {
+    padding:10px 20px;
+    background:linear-gradient(135deg, #1a2a1a 0%, #2a3e2a 100%);
+    border:1px solid #2a5a2a;
+    border-radius:2px;
+    color:var(--emerald);
+    font-size:0.8rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    cursor:pointer;
+    font-family:'Georgia', serif;
+    transition:all 0.3s;
+  }
+  #btn-copy:hover {
+    border-color:var(--emerald);
+    box-shadow:0 0 12px rgba(0,200,150,0.3);
+    color:#fff;
+  }
+  #btn-copy.copied {
+    background:linear-gradient(135deg, #0a2a0a 0%, #0a4a0a 100%);
+    border-color:var(--emerald);
+    box-shadow:0 0 20px rgba(0,200,150,0.5);
+  }
+
+  /* ═══════════════════════════════════════════
+     STATS ROW
+  ═══════════════════════════════════════════ */
+  .cipher-stats {
+    display:flex; gap:24px; flex-wrap:wrap;
+    margin-top:14px;
+  }
+  .stat-badge {
+    font-size:0.7rem;
+    letter-spacing:0.1em;
+    color:var(--stone-pale);
+    text-transform:uppercase;
+  }
+  .stat-badge strong {
+    color:var(--gold);
+    margin-left:4px;
+  }
+
+  /* ═══════════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════════ */
+  #footer {
+    margin-top:32px;
+    text-align:center;
+    font-size:0.72rem;
+    color:var(--stone-pale);
+    opacity:0.6;
+    letter-spacing:0.12em;
+  }
+  #footer .hieroglyph-row {
+    font-size:1rem;
+    letter-spacing:0.3em;
+    margin-bottom:6px;
+    animation:runeFlicker 4s ease-in-out infinite;
+  }
+
+  /* ═══════════════════════════════════════════
+     RUNE BURST ANIMATION (when generating)
+  ═══════════════════════════════════════════ */
+  .rune-burst {
+    position:fixed;
+    font-size:1.2rem;
+    color:var(--gold-bright);
+    pointer-events:none;
+    z-index:999;
+    animation:runeBurstAnim 1.2s ease-out forwards;
+  }
+  @keyframes runeBurstAnim {
+    0%  { opacity:1; transform:translate(0,0) scale(1); }
+    100%{ opacity:0; transform:translate(var(--tx),var(--ty)) scale(0.3); }
+  }
+
+  /* ═══════════════════════════════════════════
+     ERROR STATE
+  ═══════════════════════════════════════════ */
+  .error-msg {
+    color:#ff6060;
+    font-size:0.8rem;
+    margin-top:8px;
+    letter-spacing:0.08em;
+    display:none;
+  }
+  .error-msg.visible { display:block; }
+
+  /* ═══════════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════════ */
+  @media (max-width:600px) {
+    #altar { padding:28px 20px 24px; }
+    .altar-band { margin:-28px -20px 20px; }
+    .altar-band.bottom { margin:20px -20px -24px; }
+    .altar-top-row { flex-direction:column; align-items:center; }
+    .cipher-stats { gap:12px; }
+    .torch.bl, .torch.br { display:none; }
+  }
+
+  /* ═══════════════════════════════════════════
+     PYRAMID ACTIVE GLOW
+  ═══════════════════════════════════════════ */
+  #bg-pyramid.active {
+    animation:pyramidActive 0.5s ease-in-out infinite !important;
+    opacity:0.22 !important;
+  }
+  @keyframes pyramidActive {
+    0%,100%{ opacity:0.22; filter:drop-shadow(0 0 30px #c9a84c); }
+    50%    { opacity:0.32; filter:drop-shadow(0 0 60px #f0c040); }
+  }
+
+  /* ═══════════════════════════════════════════
+     TORCH FLAME ANIMATIONS
+  ═══════════════════════════════════════════ */
+  .flame-core {
+    transform-origin: 50% 100%;
+    animation: flameDance 0.9s ease-in-out infinite alternate;
+  }
+  .flame-mid {
+    transform-origin: 50% 100%;
+    animation: flameMid 1.1s ease-in-out infinite alternate;
+    animation-delay: 0.15s;
+  }
+  .flame-tip {
+    transform-origin: 50% 100%;
+    animation: flameTip 0.7s ease-in-out infinite alternate;
+    animation-delay: 0.08s;
+  }
+  .flame-inner {
+    transform-origin: 50% 100%;
+    animation: flameInner 0.6s ease-in-out infinite alternate;
+    animation-delay: 0.22s;
+  }
+  /* Slightly different timing for right torch so they don't sync */
+  .torch.tr .flame-core  { animation-duration: 0.85s; animation-delay: 0.3s; }
+  .torch.tr .flame-mid   { animation-duration: 1.05s; animation-delay: 0.45s; }
+  .torch.tr .flame-tip   { animation-duration: 0.75s; animation-delay: 0.1s; }
+  .torch.tr .flame-inner { animation-duration: 0.65s; animation-delay: 0.38s; }
+
+  @keyframes flameDance {
+    0%   { transform: scaleX(1)   scaleY(1)    skewX(0deg);   opacity: 0.95; }
+    25%  { transform: scaleX(1.1) scaleY(0.96) skewX(4deg);   opacity: 1; }
+    50%  { transform: scaleX(0.9) scaleY(1.04) skewX(-3deg);  opacity: 0.9; }
+    75%  { transform: scaleX(1.08)scaleY(0.98) skewX(2deg);   opacity: 1; }
+    100% { transform: scaleX(0.95)scaleY(1.02) skewX(-2deg);  opacity: 0.92; }
+  }
+  @keyframes flameMid {
+    0%   { transform: scaleX(1)   scaleY(1)    skewX(-2deg);  opacity: 0.85; }
+    33%  { transform: scaleX(1.12)scaleY(0.94) skewX(5deg);   opacity: 0.75; }
+    66%  { transform: scaleX(0.88)scaleY(1.06) skewX(-4deg);  opacity: 0.9; }
+    100% { transform: scaleX(1.05)scaleY(0.97) skewX(3deg);   opacity: 0.8; }
+  }
+  @keyframes flameTip {
+    0%   { transform: scaleX(1)   scaleY(1)    translateX(0px);  opacity: 0.7; }
+    40%  { transform: scaleX(1.15)scaleY(0.9)  translateX(2px);  opacity: 0.5; }
+    100% { transform: scaleX(0.85)scaleY(1.1)  translateX(-2px); opacity: 0.65; }
+  }
+  @keyframes flameInner {
+    0%   { transform: scaleY(1)   opacity: 0.5; }
+    50%  { transform: scaleY(1.1) opacity: 0.35; }
+    100% { transform: scaleY(0.9) opacity: 0.55; }
+  }
+
+  /* Ember sparks floating up */
+  .ember {
+    position: absolute;
+    width: 2px; height: 2px;
+    border-radius: 50%;
+    background: #ffcc00;
+    pointer-events: none;
+    animation: emberFloat var(--dur, 1.4s) ease-out infinite;
+    animation-delay: var(--del, 0s);
+    left: var(--lx, 30px);
+    top: 30px;
+  }
+  @keyframes emberFloat {
+    0%   { transform: translate(0, 0)     scale(1);   opacity: 0.9; }
+    40%  { transform: translate(var(--tx,3px), -18px) scale(0.8); opacity: 0.7; }
+    100% { transform: translate(var(--tx2,-4px), -42px) scale(0.2); opacity: 0; }
+  }
+
+
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+  ::-webkit-scrollbar-thumb { background:var(--gold-dark); border-radius:3px; }
+</style>
+</head>
+<body>
+
+<!-- ════════════ BACKGROUND CHAMBER ════════════ -->
+<div id="chamber"></div>
+
+<!-- ════════════ PARTICLE CANVAS ════════════ -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- ════════════ BG PYRAMID ════════════ -->
+<svg id="bg-pyramid" viewBox="0 0 600 500">
+  <polygon points="300,20 580,480 20,480" fill="none" stroke="#c9a84c" stroke-width="2"/>
+  <polygon points="300,100 500,480 100,480" fill="none" stroke="#c9a84c" stroke-width="1.2" opacity="0.6"/>
+  <polygon points="300,180 420,480 180,480" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+  <line x1="300" y1="20" x2="300" y2="480" stroke="#c9a84c" stroke-width="0.6" opacity="0.3"/>
+  <line x1="300" y1="20" x2="20" y2="480" stroke="#c9a84c" stroke-width="0.4" opacity="0.2"/>
+  <line x1="300" y1="20" x2="580" y2="480" stroke="#c9a84c" stroke-width="0.4" opacity="0.2"/>
+  <!-- Eye of Ra in pyramid -->
+  <ellipse cx="300" cy="260" rx="30" ry="18" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+  <circle cx="300" cy="260" r="10" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.7"/>
+  <circle cx="300" cy="260" r="4" fill="#c9a84c" opacity="0.9"/>
+</svg>
+
+<!-- ════════════ WALL GLYPHS ════════════ -->
+<svg class="wall-glyphs left" viewBox="0 0 120 800">
+  <rect width="120" height="800" fill="none"/>
+  <!-- Vertical border column -->
+  <rect x="8" y="0" width="6" height="800" fill="#c9a84c" opacity="0.3"/>
+  <rect x="106" y="0" width="6" height="800" fill="#c9a84c" opacity="0.15"/>
+  <!-- Glyphs stacked -->
+  <text x="40" y="60"  font-size="28" fill="#c9a84c">𓃠</text>
+  <text x="38" y="120" font-size="26" fill="#c9a84c">𓂀</text>
+  <text x="36" y="178" font-size="30" fill="#c9a84c">𓆣</text>
+  <text x="38" y="236" font-size="28" fill="#c9a84c">𓇯</text>
+  <text x="40" y="296" font-size="26" fill="#c9a84c">𓋹</text>
+  <text x="36" y="354" font-size="30" fill="#c9a84c">𓊹</text>
+  <text x="38" y="412" font-size="28" fill="#c9a84c">𓁹</text>
+  <text x="40" y="470" font-size="26" fill="#c9a84c">𓃠</text>
+  <text x="36" y="528" font-size="30" fill="#c9a84c">𓂀</text>
+  <text x="38" y="586" font-size="28" fill="#c9a84c">𓆣</text>
+  <text x="40" y="644" font-size="26" fill="#c9a84c">𓇯</text>
+  <text x="36" y="702" font-size="30" fill="#c9a84c">𓋹</text>
+  <text x="38" y="760" font-size="28" fill="#c9a84c">𓊹</text>
+</svg>
+
+<svg class="wall-glyphs right" viewBox="0 0 120 800">
+  <rect width="120" height="800" fill="none"/>
+  <rect x="8"  y="0" width="6" height="800" fill="#c9a84c" opacity="0.3"/>
+  <rect x="106" y="0" width="6" height="800" fill="#c9a84c" opacity="0.15"/>
+  <text x="40" y="60"  font-size="28" fill="#c9a84c">𓊹</text>
+  <text x="38" y="120" font-size="26" fill="#c9a84c">𓁹</text>
+  <text x="36" y="178" font-size="30" fill="#c9a84c">𓃠</text>
+  <text x="38" y="236" font-size="28" fill="#c9a84c">𓂀</text>
+  <text x="40" y="296" font-size="26" fill="#c9a84c">𓆣</text>
+  <text x="36" y="354" font-size="30" fill="#c9a84c">𓇯</text>
+  <text x="38" y="412" font-size="28" fill="#c9a84c">𓋹</text>
+  <text x="40" y="470" font-size="26" fill="#c9a84c">𓊹</text>
+  <text x="36" y="528" font-size="30" fill="#c9a84c">𓁹</text>
+  <text x="38" y="586" font-size="28" fill="#c9a84c">𓃠</text>
+  <text x="40" y="644" font-size="26" fill="#c9a84c">𓂀</text>
+  <text x="36" y="702" font-size="30" fill="#c9a84c">𓆣</text>
+  <text x="38" y="760" font-size="28" fill="#c9a84c">𓇯</text>
+</svg>
+
+<!-- ════════════ TORCHES ════════════ -->
+<div class="torch tl">
+  <div class="torch-glow"></div>
+  <!-- Ember sparks -->
+  <div class="ember" style="--lx:28px;--dur:1.3s;--del:0s;  --tx:4px; --tx2:-3px;"></div>
+  <div class="ember" style="--lx:32px;--dur:1.6s;--del:0.4s;--tx:-5px;--tx2:3px; background:#ff9900;"></div>
+  <div class="ember" style="--lx:26px;--dur:1.1s;--del:0.7s;--tx:2px; --tx2:-6px;background:#fff;width:1px;height:1px;"></div>
+  <div class="ember" style="--lx:34px;--dur:1.8s;--del:0.2s;--tx:-3px;--tx2:5px; background:#ff6600;"></div>
+  <svg width="60" height="100" viewBox="0 0 60 100" style="overflow:visible;">
+    <defs>
+      <radialGradient id="flameGrad1" cx="50%" cy="80%" r="60%">
+        <stop offset="0%"   stop-color="#ffffff"/>
+        <stop offset="25%"  stop-color="#ffe066"/>
+        <stop offset="60%"  stop-color="#ff6600"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+      <radialGradient id="flameMidGrad1" cx="50%" cy="85%" r="55%">
+        <stop offset="0%"   stop-color="#fff4aa"/>
+        <stop offset="50%"  stop-color="#ffaa00"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+    </defs>
+    <!-- Torch handle -->
+    <rect x="25" y="55" width="10" height="40" rx="2" fill="#5a3a10"/>
+    <rect x="22" y="48" width="16" height="12" rx="2" fill="#6a4a18"/>
+    <ellipse cx="30" cy="48" rx="10" ry="6" fill="#7a5a20"/>
+    <!-- Flame layers — outermost to innermost -->
+    <ellipse class="flame-core" cx="30" cy="28" rx="9"  ry="22" fill="url(#flameGrad1)"    opacity="0.88"/>
+    <ellipse class="flame-mid"  cx="29" cy="30" rx="6"  ry="16" fill="url(#flameMidGrad1)" opacity="0.80"/>
+    <ellipse class="flame-tip"  cx="30" cy="22" rx="4"  ry="12" fill="#ffdd44"             opacity="0.65"/>
+    <ellipse class="flame-inner"cx="30" cy="33" rx="3"  ry="8"  fill="#ffffff"             opacity="0.30"/>
+  </svg>
+</div>
+<div class="torch tr">
+  <div class="torch-glow"></div>
+  <!-- Ember sparks — slightly different timings for variety -->
+  <div class="ember" style="--lx:30px;--dur:1.5s;--del:0.1s;--tx:-4px;--tx2:3px;"></div>
+  <div class="ember" style="--lx:26px;--dur:1.2s;--del:0.5s;--tx:5px; --tx2:-4px;background:#ff9900;"></div>
+  <div class="ember" style="--lx:33px;--dur:1.7s;--del:0.8s;--tx:-2px;--tx2:6px; background:#fff;width:1px;height:1px;"></div>
+  <div class="ember" style="--lx:28px;--dur:1.0s;--del:0.3s;--tx:3px; --tx2:-5px;background:#ff6600;"></div>
+  <svg width="60" height="100" viewBox="0 0 60 100" style="overflow:visible;">
+    <defs>
+      <radialGradient id="flameGrad2" cx="50%" cy="80%" r="60%">
+        <stop offset="0%"   stop-color="#ffffff"/>
+        <stop offset="25%"  stop-color="#ffe066"/>
+        <stop offset="60%"  stop-color="#ff6600"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+      <radialGradient id="flameMidGrad2" cx="50%" cy="85%" r="55%">
+        <stop offset="0%"   stop-color="#fff4aa"/>
+        <stop offset="50%"  stop-color="#ffaa00"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+    </defs>
+    <!-- Torch handle -->
+    <rect x="25" y="55" width="10" height="40" rx="2" fill="#5a3a10"/>
+    <rect x="22" y="48" width="16" height="12" rx="2" fill="#6a4a18"/>
+    <ellipse cx="30" cy="48" rx="10" ry="6" fill="#7a5a20"/>
+    <!-- Flame layers -->
+    <ellipse class="flame-core" cx="30" cy="28" rx="9"  ry="22" fill="url(#flameGrad2)"    opacity="0.88"/>
+    <ellipse class="flame-mid"  cx="31" cy="30" rx="6"  ry="16" fill="url(#flameMidGrad2)" opacity="0.80"/>
+    <ellipse class="flame-tip"  cx="30" cy="22" rx="4"  ry="12" fill="#ffdd44"             opacity="0.65"/>
+    <ellipse class="flame-inner"cx="30" cy="33" rx="3"  ry="8"  fill="#ffffff"             opacity="0.30"/>
+  </svg>
+</div>
+
+<!-- ════════════ MAIN APP ════════════ -->
+<div id="app">
+
+  <!-- ── HEADER ── -->
+  <header id="header">
+    <!-- Bastet Cat Statue SVG -->
+    <div id="bastet-statue-wrap">
+      <svg id="bastet-svg" width="120" height="140" viewBox="0 0 120 140">
+        <defs>
+          <radialGradient id="bodyGold" cx="50%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#f0c040"/>
+            <stop offset="60%" stop-color="#c9a84c"/>
+            <stop offset="100%" stop-color="#7a5c1e"/>
+          </radialGradient>
+          <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#00ff88"/>
+            <stop offset="100%" stop-color="#006633"/>
+          </radialGradient>
+          <filter id="goldenGlow">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+        <!-- Base/Pedestal -->
+        <rect x="20" y="118" width="80" height="18" rx="3" fill="url(#bodyGold)" stroke="#7a5c1e" stroke-width="1"/>
+        <text x="60" y="131" text-anchor="middle" font-size="7" fill="#1a1208" letter-spacing="1">𓃠 𓂀 𓃠</text>
+        <!-- Body -->
+        <path d="M 38 118 L 38 70 Q 38 55 60 50 Q 82 55 82 70 L 82 118 Z" fill="url(#bodyGold)" stroke="#7a5c1e" stroke-width="1"/>
+        <!-- Chest detail -->
+        <path d="M 45 80 Q 60 75 75 80 L 78 95 Q 60 98 42 95 Z" fill="#c9a84c" opacity="0.6"/>
+        <!-- Collar / Necklace -->
+        <path d="M 40 72 Q 60 65 80 72" fill="none" stroke="#f0c040" stroke-width="2"/>
+        <circle cx="50" cy="70" r="3" fill="#f0c040"/>
+        <circle cx="60" cy="68" r="3.5" fill="#f0c040"/>
+        <circle cx="70" cy="70" r="3" fill="#f0c040"/>
+        <circle cx="57" cy="64" r="2.5" fill="#ff4444"/>
+        <circle cx="63" cy="64" r="2.5" fill="#ff4444"/>
+        <!-- Neck -->
+        <rect x="50" y="52" width="20" height="18" rx="8" fill="url(#bodyGold)" stroke="#7a5c1e" stroke-width="0.5"/>
+        <!-- Head -->
+        <ellipse cx="60" cy="42" rx="26" ry="24" fill="url(#bodyGold)" stroke="#7a5c1e" stroke-width="1"/>
+        <!-- Cat Ears -->
+        <polygon points="38,24 30,5 48,20" fill="url(#bodyGold)" stroke="#7a5c1e" stroke-width="1"/>
+        <polygon points="82,24 90,5 72,20" fill="url(#bodyGold)" stroke="#7a5c1e" stroke-width="1"/>
+        <!-- Inner ear -->
+        <polygon points="39,22 33,9 46,20" fill="#e8902a" opacity="0.7"/>
+        <polygon points="81,22 87,9 74,20" fill="#e8902a" opacity="0.7"/>
+        <!-- Eyes -->
+        <ellipse cx="50" cy="40" rx="7" ry="5" fill="url(#eyeGlow)" id="left-eye"/>
+        <ellipse cx="70" cy="40" rx="7" ry="5" fill="url(#eyeGlow)" id="right-eye"/>
+        <!-- Eye pupils -->
+        <ellipse cx="50" cy="40" rx="3" ry="4" fill="#000"/>
+        <ellipse cx="70" cy="40" rx="3" ry="4" fill="#000"/>
+        <!-- Eye shine -->
+        <circle cx="52" cy="38" r="1.5" fill="white" opacity="0.8"/>
+        <circle cx="72" cy="38" r="1.5" fill="white" opacity="0.8"/>
+        <!-- Eye liner (kohl) -->
+        <path d="M 42 40 L 50 38 L 58 40" fill="none" stroke="#1a1208" stroke-width="1.5"/>
+        <path d="M 62 40 L 70 38 L 78 40" fill="none" stroke="#1a1208" stroke-width="1.5"/>
+        <!-- Eye outer line extending -->
+        <line x1="42" y1="40" x2="38" y2="37" stroke="#1a1208" stroke-width="1.2"/>
+        <line x1="78" y1="40" x2="82" y2="37" stroke="#1a1208" stroke-width="1.2"/>
+        <!-- Nose -->
+        <path d="M 57 46 Q 60 50 63 46" fill="#e8902a" opacity="0.8"/>
+        <!-- Mouth smile -->
+        <path d="M 55 52 Q 60 56 65 52" fill="none" stroke="#7a5c1e" stroke-width="1.2"/>
+        <!-- Whiskers -->
+        <line x1="35" y1="48" x2="50" y2="47" stroke="#c9a84c" stroke-width="0.8" opacity="0.6"/>
+        <line x1="33" y1="52" x2="49" y2="50" stroke="#c9a84c" stroke-width="0.8" opacity="0.6"/>
+        <line x1="70" y1="47" x2="85" y2="48" stroke="#c9a84c" stroke-width="0.8" opacity="0.6"/>
+        <line x1="71" y1="50" x2="87" y2="52" stroke="#c9a84c" stroke-width="0.8" opacity="0.6"/>
+        <!-- Headdress detail -->
+        <path d="M 38 28 Q 25 20 28 10 Q 40 15 44 26" fill="#c9a84c" opacity="0.5"/>
+        <path d="M 82 28 Q 95 20 92 10 Q 80 15 76 26" fill="#c9a84c" opacity="0.5"/>
+        <!-- Crown scarab -->
+        <ellipse cx="60" cy="20" rx="8" ry="5" fill="#1a5a8a" stroke="#4af" stroke-width="0.5" opacity="0.9"/>
+        <text x="60" y="23" text-anchor="middle" font-size="6" fill="#4af">𓆣</text>
+        <!-- Arms / Ankh holder -->
+        <path d="M 38 85 L 28 95 L 35 105" fill="none" stroke="#c9a84c" stroke-width="2"/>
+        <path d="M 82 85 L 92 95 L 85 105" fill="none" stroke="#c9a84c" stroke-width="2"/>
+        <!-- Ankh in right hand -->
+        <line x1="85" y1="105" x2="85" y2="115" stroke="#f0c040" stroke-width="2"/>
+        <line x1="80" y1="108" x2="90" y2="108" stroke="#f0c040" stroke-width="2"/>
+        <ellipse cx="85" cy="104" rx="4" ry="5" fill="none" stroke="#f0c040" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <h1 class="app-title">BastetCipher</h1>
+    <p class="app-tagline">"Guarded by Bastet, forged in entropy."</p>
+
+    <div class="divider-runes">
+      <div class="divider-rune-line"></div>
+      <span>𓃠</span>
+      <span>𓂀</span>
+      <span>𓊹</span>
+      <div class="divider-rune-line"></div>
+    </div>
+  </header>
+
+  <!-- ── ALTAR ── -->
+  <main id="altar">
+    <!-- Top engraved band -->
+    <div class="altar-band"></div>
+
+    <!-- Cipher wheel + Bastet eyes row -->
+    <div class="altar-top-row">
+      <!-- Cipher Disk -->
+      <div id="cipher-wheel-wrap">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <defs>
+            <radialGradient id="diskGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#3d2e10"/>
+              <stop offset="100%" stop-color="#1e1808"/>
+            </radialGradient>
+          </defs>
+          <!-- Outer ring -->
+          <circle cx="40" cy="40" r="38" fill="url(#diskGrad)" stroke="#c9a84c" stroke-width="1.5"/>
+          <!-- Tick marks -->
+          <g stroke="#c9a84c" stroke-width="0.8" opacity="0.7">
+            <line x1="40" y1="4"  x2="40" y2="12" transform="rotate(0 40 40)"/>
+            <line x1="40" y1="4"  x2="40" y2="10" transform="rotate(30 40 40)"/>
+            <line x1="40" y1="4"  x2="40" y2="10" transform="rotate(60 40 40)"/>
+            <line x1="40" y1="4"  x2="40" y2="12" transform="rotate(90 40 40)"/>
+            <line x1="40" y1="4"  x2="40" y2="10" transform="rotate(120 40 40)"/>
+            <line x1="40" y1="4"  x2="40" y2="10" transform="rotate(150 40 40)"/>
+            <line x1="40" y1="4"  x2="40" y2="12" transform="rotate(180 40 40)"/>
+            <line x1="40" y1="4"  x2="40" y2="10" transform="rotate(210 40 40)"/>
+            <line x1="40" y1="4"  x2="40" y2="10" transform="rotate(240 40 40)"/>
+            <line x1="40" y1="4"  x2="40" y2="12" transform="rotate(270 40 40)"/>
+            <line x1="40" y1="4"  x2="40" y2="10" transform="rotate(300 40 40)"/>
+            <line x1="40" y1="4"  x2="40" y2="10" transform="rotate(330 40 40)"/>
+          </g>
+          <!-- Hieroglyph ring -->
+          <text x="40" y="19" text-anchor="middle" font-size="8" fill="#c9a84c" transform="rotate(0 40 40)">𓃠</text>
+          <text x="40" y="19" text-anchor="middle" font-size="8" fill="#c9a84c" transform="rotate(60 40 40)">𓂀</text>
+          <text x="40" y="19" text-anchor="middle" font-size="8" fill="#c9a84c" transform="rotate(120 40 40)">𓆣</text>
+          <text x="40" y="19" text-anchor="middle" font-size="8" fill="#c9a84c" transform="rotate(180 40 40)">𓇯</text>
+          <text x="40" y="19" text-anchor="middle" font-size="8" fill="#c9a84c" transform="rotate(240 40 40)">𓋹</text>
+          <text x="40" y="19" text-anchor="middle" font-size="8" fill="#c9a84c" transform="rotate(300 40 40)">𓊹</text>
+          <!-- Inner disk -->
+          <circle cx="40" cy="40" r="22" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+          <circle cx="40" cy="40" r="14" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+          <!-- Center eye -->
+          <ellipse cx="40" cy="40" rx="8" ry="5" fill="none" stroke="#c9a84c" stroke-width="1"/>
+          <circle cx="40" cy="40" r="3" fill="#c9a84c"/>
+          <!-- Cross lines -->
+          <line x1="18" y1="40" x2="62" y2="40" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+          <line x1="40" y1="18" x2="40" y2="62" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+        </svg>
+      </div>
+
+      <!-- Center glyph display -->
+      <div id="bastet-eyes-wrap">
+        <div class="bastet-section-title">Sacred Cipher Engine</div>
+        <div class="bastet-eyes-indicator">
+          <div class="eye-orb" id="eye-left"></div>
+          <div class="lock-status" id="lock-icon">🔒</div>
+          <div class="eye-orb" id="eye-right"></div>
+        </div>
+        <div id="rune-display" style="font-size:1.4rem;letter-spacing:0.3em;color:var(--gold-dark);margin-top:8px;min-height:28px;transition:all 0.3s;">𓃠 𓂀 𓊹 𓆣 𓇯 𓋹</div>
+      </div>
+
+      <!-- Ancient Key SVG -->
+      <div style="flex-shrink:0;">
+        <svg width="70" height="80" viewBox="0 0 70 80">
+          <defs>
+            <linearGradient id="keyGold" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f0c040"/>
+              <stop offset="50%" stop-color="#c9a84c"/>
+              <stop offset="100%" stop-color="#7a5c1e"/>
+            </linearGradient>
+          </defs>
+          <!-- Key shaft -->
+          <rect x="30" y="30" width="6" height="46" rx="2" fill="url(#keyGold)"/>
+          <!-- Key bow (ring) -->
+          <circle cx="33" cy="20" r="16" fill="none" stroke="url(#keyGold)" stroke-width="5"/>
+          <!-- Hieroglyph inside key ring -->
+          <text x="33" y="25" text-anchor="middle" font-size="10" fill="#c9a84c">𓋹</text>
+          <!-- Key teeth -->
+          <rect x="36" y="54" width="10" height="4" rx="1" fill="url(#keyGold)"/>
+          <rect x="36" y="64" width="8"  height="4" rx="1" fill="url(#keyGold)"/>
+          <rect x="36" y="71" width="12" height="4" rx="1" fill="url(#keyGold)"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- INPUT: Phrase -->
+    <div class="field-group">
+      <label class="field-label" for="input-phrase">
+        <span>𓂀</span> Secret Phrase
+      </label>
+      <input
+        type="text"
+        id="input-phrase"
+        class="stone-input"
+        placeholder="Enter your secret phrase..."
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </div>
+
+    <!-- INPUT: PIM -->
+    <div class="field-group">
+      <label class="field-label" for="input-pim">
+        <span>𓆣</span> PIM — Personal Iterations Multiplier
+      </label>
+      <input
+        type="number"
+        id="input-pim"
+        class="stone-input"
+        placeholder="e.g. 563519"
+        min="1"
+        max="99999999999999999999999999999999"
+        value="563519"
+      />
+      <p class="pim-note">
+        PIM changes the number of cryptographic iterations.
+        <strong>Using the wrong PIM will generate a completely different cipher.</strong>
+        Range: 1 to 32 digits.
+      </p>
+    </div>
+
+    <p class="error-msg" id="error-msg">⚠ Please enter a secret phrase and a valid PIM.</p>
+
+    <!-- GENERATE BUTTON -->
+    <button id="btn-generate" onclick="generateCipher()">
+      <div class="btn-shimmer"></div>
+      <span class="btn-runes">𓃠 𓂀</span>
+      Generate Cipher
+      <span class="btn-runes">𓊹 𓃠</span>
+    </button>
+
+    <!-- PROGRESS BAR -->
+    <div id="status-bar">
+      <div id="progress-fill"></div>
+      <div id="status-text">Invoking Bastet...</div>
+    </div>
+
+    <!-- OUTPUT SECTION -->
+    <div id="output-section">
+      <div class="output-label">
+        <label class="field-label" style="margin-bottom:0;">
+          <span>𓊹</span> Sacred Cipher Tablet
+        </label>
+        <button id="btn-copy" onclick="copyCipher()">Copy to Clipboard 𓂀</button>
+      </div>
+
+      <div id="output-panel" style="position:relative;">
+        <div id="swirl-overlay"></div>
+        <pre id="output-text" class="cipher-cursor"></pre>
+      </div>
+
+      <div class="cipher-stats" id="cipher-stats"></div>
+    </div>
+
+    <!-- Bottom engraved band -->
+    <div class="altar-band bottom"></div>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer id="footer">
+    <div class="hieroglyph-row">𓃠 𓂀 𓆣 𓇯 𓋹 𓊹 𓁹 𓃠 𓂀 𓆣</div>
+    <div>BastetCipher · Sacred Cryptography Chamber · PBKDF2-HMAC-SHA512</div>
+    <div style="margin-top:4px;opacity:0.5;">All computations performed locally · No data transmitted</div>
+  </footer>
+
+</div><!-- /app -->
+
+
+<!-- ════════════════════════════════════════
+     JAVASCRIPT: CRYPTO ENGINE + ANIMATIONS
+════════════════════════════════════════ -->
+<script type="text/javascript">
+/* ╔══════════════════════════════════════════════════════════╗
+   ║   XSS PROTECTION — escapeHTML                          ║
+   ║   Escapes the five dangerous HTML characters so that   ║
+   ║   no user-supplied string can ever inject markup.      ║
+   ║   Used defensively on every value before it touches    ║
+   ║   innerHTML (the cipher-stats panel).                  ║
+   ╚══════════════════════════════════════════════════════════╝ */
+function escapeHTML(str) {
+  return String(str)
+    .replace(/&/g,  '&amp;')
+    .replace(/</g,  '&lt;')
+    .replace(/>/g,  '&gt;')
+    .replace(/"/g,  '&quot;')
+    .replace(/'/g,  '&#x27;');
+}
+(function initParticles() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x  = Math.random() * W;
+      this.y  = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = -(Math.random() * 0.5 + 0.1);
+      this.size   = Math.random() * 2 + 0.5;
+      this.alpha  = Math.random() * 0.5 + 0.1;
+      this.color  = Math.random() > 0.5 ? '#c9a84c' : '#d4b483';
+      this.life   = 0;
+      this.maxLife = Math.random() * 200 + 100;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.life++;
+      if (this.life > this.maxLife || this.y < -10) this.reset();
+    }
+    draw() {
+      const fade = 1 - this.life / this.maxLife;
+      ctx.globalAlpha = this.alpha * fade;
+      ctx.fillStyle   = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 80; i++) {
+    const p = new Particle();
+    p.life = Math.random() * p.maxLife; // stagger
+    particles.push(p);
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║          RUNE BURST EFFECT                              ║
+   ╚══════════════════════════════════════════════════════════╝ */
+function spawnRuneBursts(cx, cy) {
+  const runes = ['𓃠','𓂀','𓆣','𓇯','𓋹','𓊹','𓁹','𓄿','𓅀','𓅱'];
+  for (let i = 0; i < 14; i++) {
+    const el = document.createElement('div');
+    el.className = 'rune-burst';
+    el.textContent = runes[Math.floor(Math.random() * runes.length)];
+    const angle = (i / 14) * Math.PI * 2;
+    const dist  = 80 + Math.random() * 120;
+    el.style.setProperty('--tx', `${Math.cos(angle)*dist}px`);
+    el.style.setProperty('--ty', `${Math.sin(angle)*dist - 60}px`);
+    el.style.left = (cx - 10) + 'px';
+    el.style.top  = (cy - 10) + 'px';
+    el.style.animationDelay = (Math.random() * 0.3) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1500);
+  }
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║          UTILITY: ANIMATE RUNE DISPLAY                  ║
+   ╚══════════════════════════════════════════════════════════╝ */
+const RUNE_POOL = ['𓃠','𓂀','𓆣','𓇯','𓋹','𓊹','𓁹','𓄿','𓅀','𓅱','𓆑','𓆰'];
+let runeAnimInterval = null;
+
+function startRuneAnimation() {
+  const el = document.getElementById('rune-display');
+  el.style.color = 'var(--gold-bright)';
+  el.style.textShadow = '0 0 16px var(--gold-bright)';
+  runeAnimInterval = setInterval(() => {
+    let str = '';
+    for (let i = 0; i < 6; i++) str += RUNE_POOL[Math.floor(Math.random() * RUNE_POOL.length)] + ' ';
+    el.textContent = str.trim();
+  }, 80);
+}
+
+function stopRuneAnimation() {
+  clearInterval(runeAnimInterval);
+  const el = document.getElementById('rune-display');
+  el.textContent = '𓃠 𓂀 𓊹 𓆣 𓇯 𓋹';
+  el.style.color = 'var(--gold)';
+  el.style.textShadow = '0 0 8px var(--gold)';
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║          CRYPTO UTILITIES (Web Crypto API)              ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+/** Encode string to Uint8Array (UTF-8) */
+function encode(str) {
+  return new TextEncoder().encode(str);
+}
+
+/** ArrayBuffer → hex string */
+function bufToHex(buf) {
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2,'0'))
+    .join('');
+}
+
+/** SHA-256 → hex */
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', encode(str));
+  return bufToHex(buf);
+}
+
+/** SHA-384 → hex */
+async function sha384(str) {
+  const buf = await crypto.subtle.digest('SHA-384', encode(str));
+  return bufToHex(buf);
+}
+
+/** SHA-512 → hex */
+async function sha512(str) {
+  const buf = await crypto.subtle.digest('SHA-512', encode(str));
+  return bufToHex(buf);
+}
+
+/** PBKDF2 with HMAC-SHA-512 → hex string */
+async function pbkdf2(password, saltStr, iterations, keyLength) {
+  const keyMaterial = await crypto.subtle.importKey(
+    'raw',
+    encode(password),
+    { name: 'PBKDF2' },
+    false,
+    ['deriveBits']
+  );
+  const bits = await crypto.subtle.deriveBits(
+    {
+      name: 'PBKDF2',
+      salt: encode(saltStr),
+      iterations: iterations,
+      hash: 'SHA-512'
+    },
+    keyMaterial,
+    keyLength * 8
+  );
+  return bufToHex(bits);
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║          STEP 3: PROPRIETARY TRANSFORM LAYER            ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+/**
+ * transformHash(hash, seed)
+ * Deterministic multi-stage transformation:
+ *  1. Rotate characters left by (seedNum % hash.length)
+ *  2. Swap characters at even/odd positions based on seed nibble
+ *  3. Remap each hex digit via deterministic seed-derived substitution table
+ *  4. Reverse sections of length determined by seed
+ */
+function transformHash(hash, seed) {
+  const len = hash.length;
+
+  // Derive a numeric seed from first 8 chars of seed hex string
+  const seedNum = parseInt(seed.substring(0, 8), 16) >>> 0;
+
+  /* — Stage 1: Rotate left — */
+  const rotAmt = seedNum % len;
+  let s = hash.slice(rotAmt) + hash.slice(0, rotAmt);
+
+  /* — Stage 2: Swap at every N positions — */
+  const swapStep = (seedNum % 7) + 2; // 2..8
+  const arr = s.split('');
+  for (let i = 0; i + swapStep < len; i += swapStep * 2) {
+    const j = i + swapStep;
+    if (j < len) {
+      const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+  }
+  s = arr.join('');
+
+  /* — Stage 3: Hex digit remap via deterministic substitution table — */
+  // Build 16-element permutation derived from seed
+  const seedBytes = [];
+  for (let i = 0; i < 8; i++) seedBytes.push(parseInt(seed.substring(i*2, i*2+2), 16));
+  // Fisher-Yates seeded shuffle of [0..15]
+  const hexMap = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+  let rng = seedNum;
+  for (let i = 15; i > 0; i--) {
+    rng = (rng * 1664525 + 1013904223) >>> 0; // LCG
+    const j = rng % (i + 1);
+    [hexMap[i], hexMap[j]] = [hexMap[j], hexMap[i]];
+  }
+  const HEX_CHARS = '0123456789abcdef';
+  s = s.split('').map(c => {
+    const idx = HEX_CHARS.indexOf(c.toLowerCase());
+    if (idx === -1) return c;
+    return HEX_CHARS[hexMap[idx]];
+  }).join('');
+
+  /* — Stage 4: Reverse deterministic sections — */
+  const secLen = (seedNum % 12) + 4; // 4..15
+  const chunks = [];
+  for (let i = 0; i < len; i += secLen) chunks.push(s.slice(i, i + secLen));
+  // Reverse every odd-indexed chunk
+  s = chunks.map((chunk, idx) => idx % 2 === 1 ? chunk.split('').reverse().join('') : chunk).join('');
+
+  return s;
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║          STEP 7: SEEDED PRNG CHARACTER INSERTION        ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+/** Seeded LCG pseudo-random number generator */
+function createPRNG(seedHex) {
+  let state = parseInt(seedHex.substring(0, 8), 16) >>> 0;
+  return function next() {
+    state = (state * 1664525 + 1013904223) >>> 0;
+    return state / 0xFFFFFFFF;
+  };
+}
+
+/** Insert special chars at deterministic positions */
+function insertSpecialChars(str, seedHex) {
+  const SPECIAL = '!@#$%^&*_-+=~?';
+  const rng = createPRNG(seedHex);
+  const insertCount = 8 + Math.floor(rng() * 8); // 8..15 insertions
+  const arr = str.split('');
+
+  for (let i = 0; i < insertCount; i++) {
+    const pos   = Math.floor(rng() * (arr.length + 1));
+    const char  = SPECIAL[Math.floor(rng() * SPECIAL.length)];
+    arr.splice(pos, 0, char);
+  }
+  return arr.join('');
+}
+
+/**
+ * applyMixedCase(str, seedHex)
+ * Deterministically makes exactly 50% of alphabetic characters uppercase
+ * and the other 50% lowercase, using a seeded PRNG so the result is
+ * always identical for the same input+PIM.
+ * Non-alpha characters (digits, specials, punctuation) are untouched.
+ */
+function applyMixedCase(str, seedHex) {
+  // Use a fresh PRNG seeded from a derivative so it doesn't collide with
+  // the special-char insertion PRNG above.
+  const rng = createPRNG(seedHex.split('').reverse().join('')); // reversed seed → independent stream
+
+  // Collect indices of all alphabetic characters
+  const alphaIndices = [];
+  for (let i = 0; i < str.length; i++) {
+    if (/[a-zA-Z]/.test(str[i])) alphaIndices.push(i);
+  }
+
+  // Decide exactly which half gets uppercased via a deterministic Fisher-Yates shuffle,
+  // then take the first half as "uppercase set".
+  const half = Math.ceil(alphaIndices.length / 2);
+  const shuffled = [...alphaIndices];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const upperSet = new Set(shuffled.slice(0, half));
+
+  // Apply casing
+  return str.split('').map((c, i) => {
+    if (!/[a-zA-Z]/.test(c)) return c;          // leave specials/digits alone
+    return upperSet.has(i) ? c.toUpperCase() : c.toLowerCase();
+  }).join('');
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║          MAIN CIPHER PIPELINE                           ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+const PEPPER = 'Bastet_Secret_Temple_Key_\u{13060}'; // 𓃠 Unicode included
+
+async function runCipherPipeline(input, pim, onProgress) {
+  /* STEP 1 — Deterministic salt */
+  onProgress(10, 'Invoking the Sacred Salt...');
+  const salt = await sha256('BastetCipher' + input + pim + PEPPER + 'SacredSalt');
+
+  /* STEP 2 — Base hashes */
+  onProgress(20, 'Forging base hashes...');
+  const h1 = await sha256(input + salt + pim + PEPPER);
+  const h2 = await sha384(salt + input + pim + PEPPER);
+  const h3 = await sha512(input + ':' + salt + ':' + pim + ':' + PEPPER);
+
+  /* STEP 3 — Derive seed for transformation */
+  onProgress(30, 'Deriving transformation seed...');
+  const seed = await sha256(input + pim + PEPPER);
+
+  /* STEP 4 — Apply transformations */
+  onProgress(40, 'Applying proprietary transformation...');
+  const t1 = transformHash(h1, seed);
+  const t2 = transformHash(h2, seed);
+  const t3 = transformHash(h3, seed);
+
+  /* STEP 5 — Combine */
+  onProgress(50, 'Combining sacred hashes...');
+  const combined = '.,' + t1 + t2 + t3 + ',.';
+
+  /* STEP 6 — PBKDF2 key derivation
+     Iterations are derived from the PIM via a non-linear hash-based mapping:
+     - We take the first 6 hex digits of SHA-256(pim + pepper) → a 24-bit integer (0..16777215)
+     - Scale it to the range [50 000 .. 600 000]
+     - Then XOR-fold the raw pimNum (mod 65537) to make every PIM value unique
+     - This keeps timing fast (~1-3 s) while preserving full PIM sensitivity.        */
+  const pimNum   = parseInt(pim, 10);
+  const pimHash  = await sha256(pim + PEPPER + 'IterSeed');
+  const hashInt  = parseInt(pimHash.substring(0, 6), 16); // 0..16777215
+  const baseIter = 50000 + Math.floor((hashInt / 16777215) * 550000); // 50k..600k
+  const twist    = (pimNum % 65537) * 7;                               // PIM-unique offset
+  const iters    = baseIter + twist;
+  onProgress(60, `PBKDF2 · ${iters.toLocaleString()} iterations...`);
+  const pbkdf2Salt = await sha256('BastetCipher' + input + pim + PEPPER);
+  const derivedKey = await pbkdf2(combined + PEPPER, pbkdf2Salt, iters, 64);
+  onProgress(85, 'Key derived. Inserting sacred glyphs...');
+
+  /* STEP 7 — Deterministic special char insertion */
+  const withSpecial = insertSpecialChars(derivedKey, seed);
+
+  /* STEP 7b — Deterministic mixed case (50% upper / 50% lower on alpha chars) */
+  const withCase = applyMixedCase(withSpecial, seed);
+
+  /* STEP 8 — Final cipher */
+  onProgress(95, 'Sealing with Bastet\'s blessing...');
+  const finalCipher = '.,' + withCase + ',.';
+
+  onProgress(100, 'Cipher complete.');
+  return { finalCipher, iters, saltHex: salt };
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║          UI: GENERATE CIPHER HANDLER                    ║
+   ╚══════════════════════════════════════════════════════════╝ */
+let lastCipher = '';
+
+async function generateCipher() {
+  const input = document.getElementById('input-phrase').value.trim();
+  const pimRaw = document.getElementById('input-pim').value.trim();
+  const errEl  = document.getElementById('error-msg');
+
+  /* Validation */
+  if (!input || !pimRaw || !/^\d{1,32}$/.test(pimRaw)) {
+    errEl.classList.add('visible');
+    setTimeout(() => errEl.classList.remove('visible'), 4000);
+    return;
+  }
+  errEl.classList.remove('visible');
+
+  const btn = document.getElementById('btn-generate');
+  btn.disabled = true;
+
+  /* Start visual effects */
+  const pyramid = document.getElementById('bg-pyramid');
+  pyramid.classList.add('active');
+  document.getElementById('cipher-wheel-wrap').classList.add('spinning');
+  document.getElementById('eye-left').classList.add('active');
+  document.getElementById('eye-right').classList.add('active');
+  document.getElementById('lock-icon').textContent = '🔓';
+  document.getElementById('lock-icon').classList.add('unlocked');
+  document.getElementById('swirl-overlay').classList.add('active');
+  startRuneAnimation();
+
+  /* Spawn rune bursts from button */
+  const btnRect = btn.getBoundingClientRect();
+  spawnRuneBursts(btnRect.left + btnRect.width/2, btnRect.top + btnRect.height/2);
+
+  /* Show status bar */
+  const statusBar  = document.getElementById('status-bar');
+  const statusFill = document.getElementById('progress-fill');
+  const statusText = document.getElementById('status-text');
+  statusBar.classList.add('active');
+
+  function onProgress(pct, msg) {
+    statusFill.style.width = pct + '%';
+    statusText.textContent = msg;
+  }
+
+  /* Hide output while working */
+  document.getElementById('output-section').classList.remove('visible');
+
+  try {
+    const { finalCipher, iters, saltHex } = await runCipherPipeline(input, pimRaw, onProgress);
+    lastCipher = finalCipher;
+
+    /* Reveal output with typewriter effect */
+    const outputEl = document.getElementById('output-text');
+    outputEl.textContent = '';
+    document.getElementById('output-section').classList.add('visible');
+
+    // Chunk display
+    const chunkSize = 8;
+    let pos = 0;
+    const typer = setInterval(() => {
+      pos = Math.min(pos + chunkSize, finalCipher.length);
+      outputEl.textContent = finalCipher.slice(0, pos);
+      if (pos >= finalCipher.length) {
+        clearInterval(typer);
+        outputEl.classList.remove('cipher-cursor');
+
+        /* ── Safe DOM construction — no innerHTML with user data ── */
+        const statsEl = document.getElementById('cipher-stats');
+        statsEl.textContent = ''; // wipe previous content safely
+
+        // Each stat: [ label text, value text ]
+        const stats = [
+          ['Length',    finalCipher.length + ' chars'],
+          ['Iterations', iters.toLocaleString()],
+          ['Algorithm', 'PBKDF2-HMAC-SHA512'],
+          ['Salt',      saltHex.substring(0, 12) + '\u2026'],
+        ];
+        stats.forEach(([label, value]) => {
+          const badge  = document.createElement('span');
+          badge.className = 'stat-badge';
+          // label as plain text node
+          badge.appendChild(document.createTextNode(label + ' '));
+          const strong = document.createElement('strong');
+          strong.textContent = value;   // textContent — never parsed as HTML
+          badge.appendChild(strong);
+          statsEl.appendChild(badge);
+        });
+      }
+    }, 18);
+
+    // More bursts on completion
+    setTimeout(() => {
+      spawnRuneBursts(window.innerWidth/2, window.innerHeight/2);
+    }, 200);
+
+  } catch(err) {
+    statusText.textContent = 'Error: ' + err.message;
+    console.error('BastetCipher error:', err);
+  } finally {
+    setTimeout(() => {
+      btn.disabled = false;
+      pyramid.classList.remove('active');
+      document.getElementById('cipher-wheel-wrap').classList.remove('spinning');
+      document.getElementById('swirl-overlay').classList.remove('active');
+      stopRuneAnimation();
+      document.getElementById('lock-icon').classList.remove('unlocked');
+      document.getElementById('lock-icon').textContent = '🔒';
+      // keep eyes active for a bit
+      setTimeout(() => {
+        document.getElementById('eye-left').classList.remove('active');
+        document.getElementById('eye-right').classList.remove('active');
+      }, 2000);
+      statusBar.classList.remove('active');
+    }, 1200);
+  }
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║          UI: COPY TO CLIPBOARD                          ║
+   ╚══════════════════════════════════════════════════════════╝ */
+async function copyCipher() {
+  if (!lastCipher) return;
+  try {
+    await navigator.clipboard.writeText(lastCipher);
+    const btn = document.getElementById('btn-copy');
+    btn.textContent = '✓ Copied! 𓃠';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy to Clipboard 𓂀';
+      btn.classList.remove('copied');
+    }, 2500);
+  } catch(e) {
+    // Fallback for older browsers
+    const el = document.createElement('textarea');
+    el.value = lastCipher;
+    el.style.cssText = 'position:fixed;opacity:0;';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    el.remove();
+    document.getElementById('btn-copy').textContent = '✓ Copied!';
+    setTimeout(() => { document.getElementById('btn-copy').textContent = 'Copy to Clipboard 𓂀'; }, 2000);
+  }
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║          BASTET SVG EYE ANIMATION                       ║
+   ╚══════════════════════════════════════════════════════════╝ */
+(function animateBastetEyes() {
+  const leftEye  = document.getElementById('left-eye');
+  const rightEye = document.getElementById('right-eye');
+  if (!leftEye || !rightEye) return;
+
+  const colors = ['#00ff88','#00cc66','#88ff44','#00ffcc','#ffcc00'];
+  let t = 0;
+  function pulse() {
+    t++;
+    const brightness = 0.6 + 0.4 * Math.sin(t * 0.05);
+    const colorIdx = Math.floor(t * 0.02) % colors.length;
+    const glowColor = colors[colorIdx];
+    const g = `0 0 ${8 + 12 * brightness}px ${glowColor}`;
+    leftEye.style.filter  = `drop-shadow(${g})`;
+    rightEye.style.filter = `drop-shadow(${g})`;
+    requestAnimationFrame(pulse);
+  }
+  pulse();
+})();
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║          ENTER KEY TO GENERATE                          ║
+   ╚══════════════════════════════════════════════════════════╝ */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !document.getElementById('btn-generate').disabled) {
+    generateCipher();
+  }
+});
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║          PIM DIGIT-LENGTH VALIDATION                    ║
+   ╚══════════════════════════════════════════════════════════╝ */
+document.getElementById('input-pim').addEventListener('input', function() {
+  if (this.value.length > 32) this.value = this.value.slice(0, 32);
+  if (this.value.startsWith('0') && this.value.length > 1) this.value = this.value.replace(/^0+/, '') || '0';
+});
+
+</script>
+</body>
+</html>
